@@ -1,0 +1,39 @@
+# Installing Salt master and minion
+
+sudo apt-get install update
+sudo apt-get install ca-certificates curl
+
+# To install salt master and minion you have 2 options :
+# Either the usage of boostrap script 
+# Or manually writing the commands given below
+
+mkdir /etc/apt/keyrings
+sudo curl -fsSL -o /etc/apt/keyrings/salt-archive-keyring.gpg https://repo.saltproject.io/salt/py3/debian/10/amd64/latest/salt-archive-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/salt-archive-keyring.gpg arch=amd64] https://repo.saltproject.io/salt/py3/debian/10/amd64/latest buster main" | sudo tee /etc/apt/sources.list.d/salt.list
+
+sudo apt-get update
+
+sudo apt-get install salt-master or salt-minion based on your preference
+sudo systemctl enable salt-master && sudo systemctl start salt-master
+sudo systemctl enable salt-minion && sudo systemctl start salt-minion
+
+# OR
+
+curl -o bootstrap-salt.sh -L https://bootstrap.saltproject.io
+chmod +x bootstrap-salt.sh
+./bootstrap-salt.sh  -i minion name(id) -A ipaddress to bind to (master address)--> # To install salt minion
+./bootstrap-salt.sh -M -N --> # To install salt master 
+
+# Configuration
+
+# In master :
+# Uncomment these lines in the master
+interface: ip of master
+master_id: name of the master to give
+publish_port:
+ret_port:
+(More configurations will follow) 
+
+# In salt
+master: IP address of the master
+id: name the minion 
