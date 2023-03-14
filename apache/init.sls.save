@@ -1,0 +1,4 @@
+install_apache:
+  pkg.installed:
+    - pkg:
+      - apache2
